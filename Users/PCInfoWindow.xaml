@@ -1,0 +1,74 @@
+﻿<Window x:Class="ComputerClub.Users.PCInfoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        Title="Информация о ПК" 
+        Height="400" 
+        Width="500" 
+        WindowStartupLocation="CenterOwner"
+        Background="White">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Характеристики ПК" FontWeight="Bold" FontSize="20" Margin="0 0 0 10"/>
+
+        <!-- Статус, номер ПК и цена -->
+        <TextBlock Grid.Row="1" Text="Статус:" FontWeight="Bold"/>
+        <TextBlock Grid.Row="1" Text="{Binding Status}" Margin="100 0 0 0" HorizontalAlignment="Left"/>
+
+        <TextBlock Grid.Row="2" Text="Номер ПК:" FontWeight="Bold"/>
+        <TextBlock Grid.Row="2" Text="{Binding PcId}" Margin="120 0 0 0" HorizontalAlignment="Left"/>
+
+        <TextBlock Grid.Row="3" Text="Цена за час:" FontWeight="Bold"/>
+        <TextBlock Grid.Row="3" Text="{Binding PricePerHour}" Margin="120 0 0 0" HorizontalAlignment="Left"/>
+
+        <TextBlock Grid.Row="4" Text="Видеокарта:" FontWeight="Bold"/>
+        <TextBlock Grid.Row="4" Text="{Binding VideoCard}" Margin="120 0 0 0" HorizontalAlignment="Left"/>
+
+        <TextBlock Grid.Row="5" Text="Процессор:" FontWeight="Bold"/>
+        <TextBlock Grid.Row="5" Text="{Binding CPU}" Margin="120 0 0 0" HorizontalAlignment="Left"/>
+
+        <!-- Выбор времени бронирования -->
+        <TextBlock Grid.Row="6" Text="Начало бронирования:" FontWeight="Bold"/>
+        <xctk:DateTimePicker 
+            Grid.Row="6" 
+            x:Name="StartDateTimePicker" 
+            Format="Custom" 
+            FormatString="dd/MM/yyyy HH:mm" 
+            Margin="230,0,0,0" 
+            FontWeight="Bold"
+            Value="{Binding StartTime, UpdateSourceTrigger=PropertyChanged}"/>  
+
+        <TextBlock Grid.Row="7" Text="Окончание бронирования:" FontWeight="Bold"/>
+
+        <xctk:DateTimePicker 
+            Grid.Row="7" 
+            x:Name="EndDateTimePicker" 
+            Format="Custom" 
+            FormatString="dd/MM/yyyy HH:mm" 
+            Margin="230,0,0,0" 
+            FontWeight="Bold"
+            Value="{Binding EndTime, UpdateSourceTrigger=PropertyChanged}"/>
+
+
+        <Button Grid.Row="8" 
+                Content="Забронировать" 
+                Foreground="White" 
+                Background="#FFCE0000"
+                Margin="100 20 100 0"
+                FontSize="16"
+                Command="{Binding BookCommand}"
+                IsEnabled="{Binding IsAvailable}"
+                FontFamily="Segoe UI" FontWeight="Bold"/>
+    </Grid>
+</Window>
