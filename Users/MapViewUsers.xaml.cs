@@ -133,11 +133,11 @@ namespace ComputerClub.Users
         }
         private void ShowPCInfo(PC pc)
         {
-            int currentUserId = GetCurrentUserId(); // Реализуйте метод получения user_id
+            int currentUserId = GetCurrentUserId();
             var pcInfoWindow = new PCInfoWindow(pc, currentUserId);
             pcInfoWindow.Owner = Window.GetWindow(this);
             pcInfoWindow.ShowDialog();
-            LoadPCs(); // Обновляем список после бронирования
+            LoadPCs(); 
         }
 
        private int GetCurrentUserId()

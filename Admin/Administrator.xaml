@@ -102,11 +102,10 @@
                         <Separator Width="130" Height="25" Background="#00212121">
                         </Separator>
 
-                        <MenuItem Header="Магазин" Style="{StaticResource ModernMenuItem}" FontWeight="Bold" FontSize="25">
+                        <MenuItem Header="Магазин" Style="{StaticResource ModernMenuItem}" FontWeight="Bold" FontSize="25" Click="MenuItem_Click_2">
                         </MenuItem>
                     </Menu>
                 </StackPanel>
-                <!-- Декоративные элементы -->
 
             </Grid>
         </Border>

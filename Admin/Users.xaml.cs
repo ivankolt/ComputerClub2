@@ -119,5 +119,21 @@ namespace ComputerClub.Admin
                 }
             }
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var blockWindow = new BlockUserWindow();
+            blockWindow.Owner = Application.Current.MainWindow;
+            blockWindow.ShowDialog();
+            LoadUsers();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            var topUpWindow = new TopUpBalanceWindow();
+            topUpWindow.Owner = Application.Current.MainWindow;
+            topUpWindow.ShowDialog();
+            LoadUsers();
+        }
     }
 }

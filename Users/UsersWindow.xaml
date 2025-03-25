@@ -91,26 +91,29 @@
                         </Separator>
                         <Separator Width="130" Height="25" Background="#00212121">
                         </Separator>
-                        <MenuItem Header="Магазин" Style="{StaticResource ModernMenuItem}" FontWeight="Bold" FontSize="25" Click="MenuItem_Click">
+                        <MenuItem Header="Магазин" Style="{StaticResource ModernMenuItem}" FontWeight="Bold" FontSize="25" Click="Shop_Click">
                         </MenuItem>
                         <Separator Width="130" Height="25" Background="#00212121">
                         </Separator>
                         <Separator Width="130" Height="25" Background="#00212121">
                         </Separator>
 
-                        <MenuItem Header="Клубовская карта" Style="{StaticResource ModernMenuItem}" FontWeight="Bold" FontSize="25">
-                        </MenuItem>
-                        
+                        <MenuItem Header="Клубовская карта" 
+                              Style="{StaticResource ModernMenuItem}" 
+                              FontWeight="Bold" 
+                              FontSize="25"
+                              Click="ClubCardMenuItem_Click"/>  
+
                         <Separator Width="130" Height="25" Background="#00212121">
                         </Separator>
                         <Separator Width="130" Height="25" Background="#00212121">
                         </Separator>
                         
-                        <MenuItem Header="Аккаунт" Style="{StaticResource ModernMenuItem}" FontWeight="Bold" FontSize="25">
+                        <MenuItem Header="Аккаунт" Style="{StaticResource ModernMenuItem}" FontWeight="Bold" FontSize="25" Click="MenuItem_Click_1">
                         </MenuItem>
                     </Menu>
                 </StackPanel>
-                <!-- Декоративные элементы -->
+
 
             </Grid>
         </Border>

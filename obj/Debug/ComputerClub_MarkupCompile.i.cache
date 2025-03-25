@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\User\source\repos\ComputerClub\ComputerClub\App.xaml
-11-1730997979
+2071152211
 
-241485258452
+34-914017145
 39266329572
-Users\ConfirmationWindow.xaml;Users\MapViewUsers.xaml;Users\PCInfoWindow.xaml;Users\UsersWindow.xaml;Admin\Administrator.xaml;Admin\MapView.xaml;Admin\Users.xaml;Entrance\Input.xaml;MainWindow.xaml;Registration\Reg.xaml;Registration\Registr.xaml;
+Admin\AddProductWindow.xaml;Admin\BlockUserWindow.xaml;Admin\OrderHistoryWindow.xaml;Admin\ReceiveProductsWindow.xaml;Admin\Shope.xaml;Admin\TopUpBalanceWindow.xaml;Users\ClubCardView.xaml;Users\ConfirmationWindow.xaml;Users\MapViewUsers.xaml;Users\PCInfoWindow.xaml;Users\UserAccountView.xaml;Users\UserShopView.xaml;Users\UsersWindow.xaml;Admin\Administrator.xaml;Admin\MapView.xaml;Admin\Users.xaml;Entrance\Input.xaml;MainWindow.xaml;Registration\Reg.xaml;Registration\Registr.xaml;
 
-False
+True
 

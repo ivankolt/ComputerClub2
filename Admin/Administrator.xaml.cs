@@ -42,5 +42,13 @@ namespace ComputerClub.Admin
             // Устанавливаем его как содержимое MainContent
             MainContent.Content = users;
         }
+
+        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
+        {
+        
+            var shope = new Shope();
+            MainContent.Content = shope; 
+        }
     }
+    
 }

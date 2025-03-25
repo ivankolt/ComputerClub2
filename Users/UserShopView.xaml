@@ -1,0 +1,95 @@
+﻿
+<UserControl x:Class="ComputerClub.Users.UserShopView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+ 
+        <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
+            <ItemsControl x:Name="ProductsList">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="#FFCE0000" Width="400" Height="150" 
+                                CornerRadius="10" Margin="10">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Image 
+                                    Grid.Column="0" 
+                                    Source="{Binding FullImagePath}"
+                                    Width="100" 
+                                    Height="100" 
+                                    Stretch="UniformToFill" 
+                                    Margin="5"/>
+
+                                <StackPanel Grid.Column="1" Margin="10">
+                                    <TextBlock Text="{Binding ProductName}" 
+               FontWeight="Bold" FontSize="16" TextWrapping="Wrap"/>
+                                    <TextBlock Text="{Binding Price, StringFormat={} {0} ₽}"/>
+                                    <TextBlock Text="{Binding QuantityStore}"/>
+                                </StackPanel>
+
+                                <Button Grid.Column="2" Content="В корзину" 
+                                        Width="100" Margin="5,5,30,5"
+                                        Height="28"
+                                        Click="AddToCart_Click"
+                                        Tag="{Binding Id}" Background="#FF38E069" FontWeight="Bold"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <!-- Корзина -->
+        <Border Grid.Column="1" Background="#FFE0E0E0" CornerRadius="10" Padding="10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <ListView x:Name="CartList" Grid.Row="0">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding ProductName}"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="-" Width="20" 
+                                            Click="DecreaseQuantity_Click"/>
+                                    <TextBlock Text="{Binding Quantity}" Margin="5 0"/>
+                                    <Button Content="+" Width="20" 
+                                            Click="IncreaseQuantity_Click"/>
+                                </StackPanel>
+                                                        <TextBlock 
+                            Text="{Binding TotalPrice, StringFormat='{}{0} ₽'}" 
+                            Grid.Row="1"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <StackPanel Grid.Row="1" Margin="0 10">
+                    <TextBlock Text="{Binding TotalCartAmount, StringFormat='Итого: {0} ₽'}"
+                               FontSize="16" FontWeight="Bold"/>
+                </StackPanel>
+
+                <Button Grid.Row="2" Content="Оформить заказ" Height="30"
+                        Background="#FFCE0000" Foreground="White"
+                        Click="PlaceOrder_Click" FontWeight="Bold"/>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

@@ -71,7 +71,6 @@ namespace ComputerClub.Registration
             Registr registrWindow = new Registr(generatedPassword, username, password, email, firstName, lastName, phoneNumber);
             registrWindow.ShowDialog();
 
-            // Если пароль подтвержден, регистрируем пользователя
             if (registrWindow.IsPasswordConfirmed)
             {
                 bool isRegistered = dbManager.RegisterUser(username, password, email, firstName, lastName, phoneNumber);

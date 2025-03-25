@@ -9,6 +9,7 @@ using System.Windows;
 using Npgsql;
 using BCrypt;
 using ComputerClub.Users;
+using ComputerClub.Admin;
 
 namespace ComputerClub.BD
 {
@@ -160,8 +161,6 @@ namespace ComputerClub.BD
                 }
             }
         }
-
-
         public bool ConfirmBooking(int bookingId, int userId, decimal amount)
         {
             using (var connection = new NpgsqlConnection(_connectionString))
@@ -171,32 +170,45 @@ namespace ComputerClub.BD
                 {
                     try
                     {
-                        // Проверка баланса
-                        var balanceQuery = "SELECT balance FROM users WHERE id = @userId;";
                         decimal balance;
-                        using (var cmd = new NpgsqlCommand(balanceQuery, connection, transaction))
+                        using (var cmd = new NpgsqlCommand(
+                            "SELECT balance FROM users WHERE id = @userId",
+                            connection, transaction))
                         {
                             cmd.Parameters.AddWithValue("@userId", userId);
                             balance = Convert.ToDecimal(cmd.ExecuteScalar());
                         }
 
-                        if (balance < amount)
-                            return false;
+                        if (balance < amount) return false;
 
-                        // Списание средств
-                        var updateBalanceQuery = "UPDATE users SET balance = balance - @amount WHERE id = @userId;";
-                        using (var cmd = new NpgsqlCommand(updateBalanceQuery, connection, transaction))
+                        using (var cmd = new NpgsqlCommand(
+                            "UPDATE users SET balance = balance - @amount WHERE id = @userId",
+                            connection, transaction))
                         {
                             cmd.Parameters.AddWithValue("@amount", amount);
                             cmd.Parameters.AddWithValue("@userId", userId);
                             cmd.ExecuteNonQuery();
                         }
 
-                        // Обновление статуса бронирования
-                        var updateBookingQuery = "UPDATE bookings SET status = 'Подтверждённый' WHERE id = @bookingId;";
-                        using (var cmd = new NpgsqlCommand(updateBookingQuery, connection, transaction))
+                        using (var cmd = new NpgsqlCommand(
+                            "UPDATE bookings SET status = 'Подтверждённый' WHERE id = @bookingId",
+                            connection, transaction))
                         {
                             cmd.Parameters.AddWithValue("@bookingId", bookingId);
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        using (var cmd = new NpgsqlCommand(@"
+                    INSERT INTO payments 
+                        (amount, type_payment, service_name, user_id, account_number)
+                    VALUES 
+                        (@amount, 'бронирование'::payment_type_enum, 
+                         'Бронирование ПК'::service_name_enum, @userId, 
+                         (SELECT card_number FROM users WHERE id = @userId))",
+                            connection, transaction))
+                        {
+                            cmd.Parameters.AddWithValue("@amount", amount);
+                            cmd.Parameters.AddWithValue("@userId", userId);
                             cmd.ExecuteNonQuery();
                         }
 
@@ -270,19 +282,76 @@ namespace ComputerClub.BD
                 cmd.ExecuteNonQuery();
             }
         }
+        public class UserInfo
+        {
+            public string CardNumber { get; set; }
+            public decimal Balance { get; set; }
+        }
+
+        public UserInfo GetUserInfo(int userId)
+        {
+            using (var connection = new NpgsqlConnection(_connectionString))
+            {
+                connection.Open();
+                var query = @"
+            SELECT card_number, balance 
+            FROM users 
+            WHERE id = @userId";
+
+                using (var command = new NpgsqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@userId", userId);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new UserInfo
+                            {
+                                CardNumber = reader.GetString(0),
+                                Balance = reader.GetDecimal(1)
+                            };
+                        }
+                    }
+                }
+            }
+            return null;
+        }
 
         public string AuthenticateUser(string username, string password)
         {
             using (NpgsqlConnection connection = new NpgsqlConnection(_connectionString))
             {
                 connection.Open();
+
+              
+                var checkBlockedQuery = @"
+            SELECT COUNT(*) 
+            FROM blocked_users 
+            WHERE user_id = (SELECT id FROM users WHERE username = @username)";
+
+                using (var checkBlockedCmd = new NpgsqlCommand(checkBlockedQuery, connection))
+                {
+                    checkBlockedCmd.Parameters.AddWithValue("@username", username);
+                    int blockedCount = Convert.ToInt32(checkBlockedCmd.ExecuteScalar());
+
+                    if (blockedCount > 0)
+                    {
+                        MessageBox.Show("Ваш аккаунт заблокирован. Обратитесь к администратору.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return null;
+                    }
+                }
+
+         
                 var query = @"
             SELECT id, role, password_hash 
             FROM Users 
             WHERE username = @username";
+
                 using (var command = new NpgsqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@username", username);
+
                     using (var reader = command.ExecuteReader())
                     {
                         if (reader.Read())
@@ -375,17 +444,433 @@ namespace ComputerClub.BD
             return pcs;
         }
 
+        public List<Product> GetProducts()
+        {
+            var products = new List<Product>();
+            using (NpgsqlConnection connection = new NpgsqlConnection(_connectionString))
+            {
+                connection.Open();
+                var query = @"
+            SELECT 
+                id, 
+                product_name, 
+                price, 
+                quantity_store, 
+                product_type, 
+                picture 
+            FROM products order by id";
+                using (var command = new NpgsqlCommand(query, connection))
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        products.Add(new Product
+                        {
+                            Id = reader.GetInt32(0), // Убедитесь, что Id корректно считывается
+                            ProductName = reader.GetString(1),
+                            Price = reader.GetDecimal(2),
+                            QuantityStore = reader.GetInt32(3),
+                            Category = reader.GetString(4),
+                            Picture = reader.GetString(5)
+                        });
+                    }
+                }
+            }
+            return products;
+        }
+
+        public bool AddReceivedProduct(int productId, int receivedCount)
+        {
+            using (NpgsqlConnection connection = new NpgsqlConnection(_connectionString))
+            {
+                connection.Open();
+                var query = @"
+            INSERT INTO received_products (products_id, received_count)
+            VALUES (@product_id, @received_count)";
+                using (var command = new NpgsqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@product_id", productId);
+                    command.Parameters.AddWithValue("@received_count", receivedCount);
+                    try
+                    {
+                        command.ExecuteNonQuery();
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return false;
+                    }
+                }
+            }
+        }
+
         public DataTable GetUsers()
         {
             using (NpgsqlConnection connection = new NpgsqlConnection(_connectionString))
             {
                 connection.Open();
-                var query = "SELECT id, username, role, email, card_number, balance, is_active, person_id FROM public.users;";
+                var query = "SELECT id, username, email, card_number, balance, is_active, person_id FROM public.users where role = 'user';";
                 using (NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(query, connection))
                 {
                     DataTable usersTable = new DataTable();
                     adapter.Fill(usersTable);
                     return usersTable;
+                }
+            }
+        }
+
+        public void AddProduct(Product product)
+        {
+            using (var connection = new NpgsqlConnection(_connectionString))
+            {
+                connection.Open();
+                var query = @"
+            INSERT INTO public.products(
+                product_name, price, quantity_store, product_type, picture)
+            VALUES 
+                (@name, @price, @quantity, @type::product_type_enum, @picture)";
+
+                using (var cmd = new NpgsqlCommand(query, connection))
+                {
+                    cmd.Parameters.AddWithValue("@name", product.ProductName);
+                    cmd.Parameters.AddWithValue("@price", product.Price);
+                    cmd.Parameters.AddWithValue("@quantity", product.QuantityStore);
+                    cmd.Parameters.AddWithValue("@type", product.Category); 
+                    cmd.Parameters.AddWithValue("@picture", product.Picture);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        // DatabaseManager.cs
+        public List<Product> GetAvailableProducts()
+        {
+            return GetProducts().Where(p => p.QuantityStore > 0).ToList();
+        }
+
+        public Product GetProductById(int productId)
+        {
+            using (var connection = new NpgsqlConnection(_connectionString))
+            {
+                connection.Open();
+                var query = "SELECT * FROM products WHERE id = @id";
+                using (var cmd = new NpgsqlCommand(query, connection))
+                {
+                    cmd.Parameters.AddWithValue("@id", productId);
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new Product
+                            {
+                                Id = reader.GetInt32(0),
+                                ProductName = reader.GetString(1),
+                                Price = reader.GetDecimal(2),
+                                QuantityStore = reader.GetInt32(3),
+                                Category = reader.GetString(4),
+                                Picture = reader.GetString(5)
+                            };
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
+        public int CreateOrder(int userId, decimal totalAmount)
+        {
+            using (var connection = new NpgsqlConnection(_connectionString))
+            {
+                connection.Open();
+                var query = @"
+            INSERT INTO orders (user_id, total_amount)
+            VALUES (@userId, @totalAmount)
+            RETURNING id";
+
+                using (var cmd = new NpgsqlCommand(query, connection))
+                {
+                    cmd.Parameters.AddWithValue("@userId", userId);
+                    cmd.Parameters.AddWithValue("@totalAmount", totalAmount);
+                    return Convert.ToInt32(cmd.ExecuteScalar());
+                }
+            }
+        }
+
+        public void AddProductToOrder (int orderId, int productId, int quantity, NpgsqlTransaction transaction = null)
+        {
+            using (var connection = new NpgsqlConnection(_connectionString))
+            {
+                connection.Open();
+                var query = @"
+            INSERT INTO orders_products (order_id, product_id, quantity)
+            VALUES (@orderId, @productId, @quantity)";
+
+                using (var cmd = new NpgsqlCommand(query, connection))
+                {
+                    cmd.Parameters.AddWithValue("@orderId", orderId);
+                    cmd.Parameters.AddWithValue("@productId", productId);
+                    cmd.Parameters.AddWithValue("@quantity", quantity);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public int CreateOrder(int userId, decimal totalAmount, NpgsqlTransaction transaction)
+        {
+            using (var connection = new NpgsqlConnection(_connectionString))
+            {
+                connection.Open();
+                var query = "INSERT INTO orders (user_id, total_amount) VALUES (@userId, @totalAmount) RETURNING id";
+                using (var cmd = new NpgsqlCommand(query, connection, transaction))
+                {
+                    cmd.Parameters.AddWithValue("@userId", userId);
+                    cmd.Parameters.AddWithValue("@totalAmount", totalAmount);
+                    return Convert.ToInt32(cmd.ExecuteScalar());
+                }
+            }
+        }
+
+        public DataTable GetOrderHistory()
+        {
+            using (NpgsqlConnection connection = new NpgsqlConnection(_connectionString))
+            {
+                connection.Open();
+                var query = @"
+            SELECT 
+                received_products.id, 
+                received_products.date_receipt, 
+                received_products.received_count, 
+                products.product_name 
+            FROM received_products 
+            INNER JOIN products 
+            ON received_products.products_id = products.id";
+                using (NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(query, connection))
+                {
+                    DataTable historyTable = new DataTable();
+                    adapter.Fill(historyTable);
+                    return historyTable;
+                }
+            }
+        }
+
+        public bool ConfirmPurchase(int userId, decimal totalAmount, List<CartItem> cartItems)
+        {
+            using (var connection = new NpgsqlConnection(_connectionString))
+            {
+     
+                    connection.Open();
+              
+                using (var transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        var balanceQuery = "SELECT balance FROM users WHERE id = @userId";
+                        using (var cmd = new NpgsqlCommand(balanceQuery, connection, transaction))
+                        {
+                            cmd.Parameters.AddWithValue("@userId", userId);
+                            var currentBalance = Convert.ToDecimal(cmd.ExecuteScalar());
+                            if (currentBalance < totalAmount)
+                                return false;
+                        }
+
+                        var updateBalanceQuery = "UPDATE users SET balance = balance - @amount WHERE id = @userId";
+                        using (var cmd = new NpgsqlCommand(updateBalanceQuery, connection, transaction))
+                        {
+                            cmd.Parameters.AddWithValue("@userId", userId);
+                            cmd.Parameters.AddWithValue("@amount", totalAmount);
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        var orderId = CreateOrder(userId, totalAmount, transaction);
+
+                        foreach (var item in cartItems)
+                        {
+                            AddProductToOrder(orderId, item.ProductId, item.Quantity, transaction);
+                        }
+
+                        var paymentQuery = @"
+                    INSERT INTO payments (amount, type_payment, service_name, user_id)
+                    VALUES (@amount, 'покупка'::payment_type_enum, 'Товар'::service_name_enum, @userId)";
+                        using (var paymentCmd = new NpgsqlCommand(paymentQuery, connection, transaction))
+                        {
+                            paymentCmd.Parameters.AddWithValue("@amount", totalAmount);
+                            paymentCmd.Parameters.AddWithValue("@userId", userId);
+                            paymentCmd.ExecuteNonQuery();
+                        }
+
+                        transaction.Commit();
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        MessageBox.Show($"Ошибка: {ex.Message}");
+                        return false;
+                    }
+                }
+            }
+        }
+        public UserFullInfo GetFullUserInfo(int userId)
+        {
+            using (var connection = new NpgsqlConnection(_connectionString))
+            {
+                connection.Open();
+                var query = @"
+            SELECT p.first_name, p.last_name, p.phone_number, 
+                   u.email, u.username, u.card_number
+            FROM users u
+            JOIN persons p ON u.person_id = p.id
+            WHERE u.id = @userId";
+
+                using (var cmd = new NpgsqlCommand(query, connection))
+                {
+                    cmd.Parameters.AddWithValue("@userId", userId);
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new UserFullInfo
+                            {
+                                FirstName = reader.GetString(0),
+                                LastName = reader.GetString(1),
+                                PhoneNumber = reader.IsDBNull(2) ? string.Empty : reader.GetString(2),
+                                Email = reader.GetString(3),
+                                Username = reader.GetString(4),
+                                CardNumber = reader.GetString(5)
+                            };
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
+        public List<Payment> GetUserPayments(int userId)
+        {
+            var payments = new List<Payment>();
+            using (var connection = new NpgsqlConnection(_connectionString))
+            {
+                connection.Open();
+                var query = @"
+            SELECT date_payment, amount, type_payment, service_name
+            FROM payments
+            WHERE user_id = @userId
+            ORDER BY date_payment DESC";
+
+                using (var cmd = new NpgsqlCommand(query, connection))
+                {
+                    cmd.Parameters.AddWithValue("@userId", userId);
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            payments.Add(new Payment
+                            {
+                                DatePayment = reader.GetDateTime(0),
+                                Amount = reader.GetDecimal(1),
+                                TypePayment = reader.GetString(2),
+                                ServiceName = reader.GetString(3)
+                            });
+                        }
+                    }
+                }
+            }
+            return payments;
+        }
+
+        public bool UpdatePassword(int userId, string newPassword)
+        {
+            try
+            {
+                using (var connection = new NpgsqlConnection(_connectionString))
+                {
+                    connection.Open();
+                    var hashedPassword = BCrypt.Net.BCrypt.HashPassword(newPassword);
+                    var query = "UPDATE users SET password_hash = @hash WHERE id = @userId";
+
+                    using (var cmd = new NpgsqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@hash", hashedPassword);
+                        cmd.Parameters.AddWithValue("@userId", userId);
+                        cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public DataTable GetUserByCardNumber(string cardNumber)
+        {
+            using (NpgsqlConnection connection = new NpgsqlConnection(_connectionString))
+            {
+                connection.Open();
+                string query = "SELECT id, username, card_number, balance FROM users WHERE card_number = @cardNumber";
+                using (NpgsqlCommand cmd = new NpgsqlCommand(query, connection))
+                {
+                    cmd.Parameters.AddWithValue("@cardNumber", cardNumber);
+                    NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+                    return dt;
+                }
+            }
+        }
+
+        public bool BlockUser(int userId, string reason, string cardNumber)
+        {
+            using (NpgsqlConnection connection = new NpgsqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (NpgsqlTransaction transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        string insertQuery = @"INSERT INTO blocked_users (reason, block_date, user_id)
+                                     VALUES (@reason, CURRENT_DATE, @userId)";
+                        using (NpgsqlCommand cmd = new NpgsqlCommand(insertQuery, connection, transaction))
+                        {
+                            cmd.Parameters.AddWithValue("@reason", reason);
+                            cmd.Parameters.AddWithValue("@userId", userId);
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        string updateQuery = "UPDATE users SET is_active = false WHERE card_number = @cardNumber";
+                        using (NpgsqlCommand cmd = new NpgsqlCommand(updateQuery, connection, transaction))
+                        {
+                            cmd.Parameters.AddWithValue("@cardNumber", cardNumber);
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        transaction.Commit();
+                        return true;
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        return false;
+                    }
+                }
+            }
+        }
+
+        public bool UpdateUserBalance(int userId, decimal amount, string cardNumber)
+        {
+            using (NpgsqlConnection connection = new NpgsqlConnection(_connectionString))
+            {
+                connection.Open();
+                string query = "UPDATE users SET balance = balance + @amount WHERE id = @userId AND card_number = @cardNumber";
+                using (NpgsqlCommand cmd = new NpgsqlCommand(query, connection))
+                {
+                    cmd.Parameters.AddWithValue("@amount", amount);
+                    cmd.Parameters.AddWithValue("@userId", userId);
+                    cmd.Parameters.AddWithValue("@cardNumber", cardNumber);
+                    return cmd.ExecuteNonQuery() > 0;
                 }
             }
         }
@@ -405,4 +890,21 @@ namespace ComputerClub.BD
             }
         }
     }
+}
+public class UserFullInfo
+{
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string PhoneNumber { get; set; }
+    public string Email { get; set; }
+    public string Username { get; set; }
+    public string CardNumber { get; set; }
+}
+
+public class Payment
+{
+    public DateTime DatePayment { get; set; }
+    public decimal Amount { get; set; }
+    public string TypePayment { get; set; }
+    public string ServiceName { get; set; }
 }

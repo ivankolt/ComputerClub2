@@ -143,6 +143,28 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Admin\AddProductWindow.xaml.cs">
+      <DependentUpon>AddProductWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\BlockUserWindow.xaml.cs">
+      <DependentUpon>BlockUserWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\OrderHistoryWindow.xaml.cs">
+      <DependentUpon>OrderHistoryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Products.cs" />
+    <Compile Include="Admin\ReceiveProductsWindow.xaml.cs">
+      <DependentUpon>ReceiveProductsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Shope.xaml.cs">
+      <DependentUpon>Shope.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\TopUpBalanceWindow.xaml.cs">
+      <DependentUpon>TopUpBalanceWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Users\ClubCardView.xaml.cs">
+      <DependentUpon>ClubCardView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Users\ConfirmationViewModel.cs" />
     <Compile Include="Users\ConfirmationWindow.xaml.cs">
       <DependentUpon>ConfirmationWindow.xaml</DependentUpon>
@@ -155,6 +177,12 @@
       <DependentUpon>PCInfoWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Users\PCViewModel.cs" />
+    <Compile Include="Users\UserAccountView.xaml.cs">
+      <DependentUpon>UserAccountView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Users\UserShopView.xaml.cs">
+      <DependentUpon>UserShopView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Users\UsersWindow.xaml.cs">
       <DependentUpon>UsersWindow.xaml</DependentUpon>
     </Compile>
@@ -179,6 +207,34 @@
     <Compile Include="Registration\Registr.xaml.cs">
       <DependentUpon>Registr.xaml</DependentUpon>
     </Compile>
+    <Page Include="Admin\AddProductWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Admin\BlockUserWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Admin\OrderHistoryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Admin\ReceiveProductsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Admin\Shope.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Admin\TopUpBalanceWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Users\ClubCardView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Users\ConfirmationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -188,6 +244,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Users\PCInfoWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Users\UserAccountView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Users\UserShopView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -261,7 +325,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Image\dobriy-fanta.jpg" />
+  </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.8">
       <Visible>False</Visible>
@@ -273,6 +339,42 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\dobriy-cola.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\dobriy-sprite.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\gorilla-energy.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\hyperx-keyboard.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\razer-mouse.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\steelseries-mat.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\snickers-milk.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\bounty-coconut.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\twix-caramel.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\redbull-can.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\pringles-original.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\lays-smetana.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

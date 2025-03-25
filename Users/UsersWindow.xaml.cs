@@ -28,6 +28,14 @@ namespace ComputerClub.Users
         {
             LoadMapView();
         }
+
+        private void Shop_Click(object sender, RoutedEventArgs e)
+        {
+            var userShop = new UserShopView();
+
+            MainContent.Content = userShop;
+        }
+
         private void LoadMapView()
         {
             var mapView = new MapViewUsers();
@@ -35,9 +43,17 @@ namespace ComputerClub.Users
             MainContent.Content = mapView;
         }
 
+        private void ClubCardMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var clubCardView = new ClubCardView();
+
+            MainContent.Content = clubCardView;
+        }
+
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
-           
+            var accountView = new UserAccountView();
+            MainContent.Content = accountView;
         }
     }
 }
