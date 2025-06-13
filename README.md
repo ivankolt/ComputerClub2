@@ -47,8 +47,7 @@
 - user_actions
 - users
 
-
-![Структура БД]![image](https://github.com/user-attachments/assets/40d0b070-80c5-4b18-ad42-24d8313440a4) Структура проекта 🗂️
+[image](https://github.com/user-attachments/assets/40d0b070-80c5-4b18-ad42-24d8313440a4) Структура проекта 🗂️
 
 - **Admin/** — компоненты для работы администратора
 - **Manager/** — логика управления клубом
@@ -82,13 +81,14 @@
 Добавьте изображения и видео в папку проекта (например, `images/`), затем вставьте их в README.md так:
 
 ```markdown
-![Окно входа] ![snimok-ekrana-2025-05-13-213251](https://github.com/user-attachments/assets/a8946588-0c3b-4b99-81a2-cebb0312c422)
+![Окно входа] ![image](https://github.com/user-attachments/assets/6bf83b49-b60f-4361-834c-ecb656607441)
 
-![Окно регистрации] ![snimok-ekrana-2025-05-13-213327](https://github.com/user-attachments/assets/4bc3c29c-cf1e-4184-a248-76c61072d055)
+![Окно регистрации] ![image](https://github.com/user-attachments/assets/ef0a1969-90b0-4346-884e-6a55a821d675)
 
-![Окно продаж] ![snimok-ekrana-2025-03-13-184810](https://github.com/user-attachments/assets/e923d6ed-b5a2-4a51-a5da-f29cbcf17201)
+![Окно продаж] ![image](https://github.com/user-attachments/assets/c3e8277a-53ac-4b47-a020-cc9bf9ac0793)
 
-![Окно бронирования пк] ![snimok-ekrana-2025-05-13-213438](https://github.com/user-attachments/assets/a3684252-4682-445a-89b0-dadc212f248f)
+![Окно бронирования пк] ![image](https://github.com/user-attachments/assets/a88b4be1-573a-4945-97f6-f7c50f1c706e)
+
 ```
 
 ---
