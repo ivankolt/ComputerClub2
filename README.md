@@ -128,15 +128,3 @@ SOFTWARE.
 ---
 
 Удачи и приятного использования! 😊
-
-[1] https://pplx-res.cloudinary.com/image/private/user_uploads/74081480/18e87330-6944-42b3-9e07-0bc82906ac7f/image.jpg
-[2] https://support.syncfusion.com/kb/article/11107/how-to-perform-the-crud-operations-in-wpf-scheduler-calendar-using-postgresql-database
-[3] https://learn.microsoft.com/en-us/dotnet/aspire/database/postgresql-integration
-[4] https://neon.com/postgresql/postgresql-csharp/postgresql-csharp-connect
-[5] https://tembo.io/docs/getting-started/postgres_guides/connecting-to-postgres-with-c-sharp
-[6] https://michaelscodingspot.com/postgres-in-csharp/
-[7] https://stackoverflow.com/questions/71713366/how-can-i-retrieve-data-from-my-postgresql-database-wpf-c
-[8] https://www.connectionstrings.com/questions/100132/connection-to-postgresql-database-from-c-wpf-application-using-dapper/
-[9] https://www.npgsql.org
-[10] https://help.reg.ru/support/servery-vps/oblachnyye-bazy-dannykh/postgresql/kak-upravlyat-bazami-dannykh-v-postgresql
-[11] https://blog.skillfactory.ru/glossary/postgresql/
