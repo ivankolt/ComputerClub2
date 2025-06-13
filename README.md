@@ -76,16 +76,16 @@
 
 ## Скриншоты 📸
 
-![Окно входа] ![image](https://github.com/user-attachments/assets/a644a0b7-3118-4167-8980-a727046c15be)
+![image](https://github.com/user-attachments/assets/a644a0b7-3118-4167-8980-a727046c15be)
 
 
-![Окно регистрации] ![image](https://github.com/user-attachments/assets/d925c5cb-fb79-4e61-9dc8-b883d17f79c9)
+![image](https://github.com/user-attachments/assets/d925c5cb-fb79-4e61-9dc8-b883d17f79c9)
 
 
-![Окно продаж] ![image](https://github.com/user-attachments/assets/669c39c3-24d9-40f4-957e-adb744545b7a)
+![image](https://github.com/user-attachments/assets/669c39c3-24d9-40f4-957e-adb744545b7a)
 
 
-![Окно бронирования пк] ![image](https://github.com/user-attachments/assets/6f044c2e-715e-4101-ae6b-38fe47b73a49)
+![image](https://github.com/user-attachments/assets/6f044c2e-715e-4101-ae6b-38fe47b73a49)
 
 ---
 
