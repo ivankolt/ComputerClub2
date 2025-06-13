@@ -36,7 +36,7 @@ namespace ComputerClub.Users
       
             var mainStackPanel = new StackPanel { Orientation = Orientation.Vertical };
 
-            // Создаем заголовки и WrapPanel для каждой зоны
+           
             var zoneContainers = new Dictionary<string, WrapPanel>
     {
         { "Игровая", CreateZoneContainer("Игровая", mainStackPanel) },
@@ -45,7 +45,7 @@ namespace ComputerClub.Users
         { "Кокпит", CreateZoneContainer("Кокпит", mainStackPanel) }
     };
 
-            // Получаем список ПК из базы данных
+          
             var pcs = _databaseManager.GetPCs();
 
             foreach (var pc in pcs)
@@ -56,13 +56,13 @@ namespace ComputerClub.Users
                    
                     var button = new Button
                     {
-                        Content = $"  {pc.Id}",
+                        Content = $"  {pc.Id} \n  {pc.PricePerHour}₽",
                         Width = 100,
                         Height = 50,
                         FontFamily = new FontFamily("Segoe UI"),
                         Margin = new Thickness(10),
                         Background = GetColorByZone(pc.Zone),
-                        FontSize = 20,
+                        FontSize = 18,
                         HorizontalContentAlignment = HorizontalAlignment.Center,
                         VerticalContentAlignment = VerticalAlignment.Center,
                         Style = CreateRoundedButtonStyle()
@@ -82,7 +82,7 @@ namespace ComputerClub.Users
 
         private WrapPanel CreateZoneContainer(string zoneName, StackPanel parentPanel)
         {
-            // Создаем заголовок зоны
+           
             var zoneLabel = new Label
             {
                 Content = zoneName,
@@ -92,7 +92,7 @@ namespace ComputerClub.Users
                 HorizontalContentAlignment = HorizontalAlignment.Center
             };
 
-            // Создаем контейнер для кнопок ПК
+           
             var wrapPanel = new WrapPanel { Margin = new Thickness(10) };
 
             parentPanel.Children.Add(zoneLabel);

@@ -19,9 +19,10 @@ namespace ComputerClub.Admin
             LoadProducts();
         }
 
-        private void LoadProducts()
+        private async void LoadProducts()
         {
-            _products = new ObservableCollection<Product>(_dbManager.GetProducts());
+            var products = await _dbManager.GetProducts();
+            _products = new ObservableCollection<Product>(products);
             OnPropertyChanged(nameof(Products));
         }
 

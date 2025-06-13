@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ComputerClub.Users;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -38,8 +39,6 @@ namespace ComputerClub.Admin
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
             var users = new Users();
-
-            // Устанавливаем его как содержимое MainContent
             MainContent.Content = users;
         }
 
@@ -48,6 +47,30 @@ namespace ComputerClub.Admin
         
             var shope = new Shope();
             MainContent.Content = shope; 
+        }
+
+        private void MenuItem_Click_Dash(object sender, RoutedEventArgs e)
+        {
+            var dashboardControl = new DashboardControl();
+         
+            MainContent.Content = dashboardControl; 
+        }
+
+        private void MenuItem_Click_3(object sender, RoutedEventArgs e)
+        {
+            var shiftControl = new ShiftControl(CurrentUser.Instance.EmployeeId);
+            MainContent.Content = shiftControl;
+        }
+
+        private void MenuItem_Click_4(object sender, RoutedEventArgs e)
+        {
+            var ordersManagementControl = new OrdersManagementControl();
+            MainContent.Content = ordersManagementControl;
+        }
+
+        private void MenuItem_Click_5(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
     

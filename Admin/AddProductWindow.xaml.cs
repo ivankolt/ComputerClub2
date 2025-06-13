@@ -1,5 +1,4 @@
-﻿// AddProductWindow.xaml.cs
-using ComputerClub.BD;
+﻿using ComputerClub.BD;
 using Microsoft.Win32;
 using System;
 using System.IO;
@@ -10,7 +9,9 @@ namespace ComputerClub.Admin
     public partial class AddProductWindow : Window
     {
         private string _imagePath;
-        private readonly string _imageFolder = Path.Combine(Directory.GetCurrentDirectory(), "images");
+
+        
+        private readonly string _imageFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "Images", "Products");
 
         public AddProductWindow()
         {
@@ -27,8 +28,7 @@ namespace ComputerClub.Admin
 
         private void LoadCategories()
         {
-            // Заполняем категории из enum (нужно заменить на реальные значения из БД)
-            CategoryComboBox.ItemsSource = new[] { "Кукурузные снеки", "Картофельные чипсы", "Газированный напиток", "Энергетический напиток", "Батончики", "Периферия" };
+            CategoryComboBox.ItemsSource = new[] { "БЕЗАЛКОГОЛЬНЫЕ_НАПИТКИ", "ЧИПСЫ_И_СНЕКИ", "ЭНЕРГЕТИЧЕСКИЕ_НАПИТКИ", "ИГРОВЫЕ_АКСЕССУАРЫ", "ШОКОЛАДНЫЕ_БАТОНЧИКИ" };
         }
 
         private void BrowseImage_Click(object sender, RoutedEventArgs e)
@@ -52,10 +52,8 @@ namespace ComputerClub.Admin
             {
                 try
                 {
-                    // Копируем изображение
                     var destPath = CopyImageToFolder();
 
-                    // Создаем новый товар
                     var newProduct = new Product
                     {
                         ProductName = ProductNameTextBox.Text,
@@ -65,7 +63,6 @@ namespace ComputerClub.Admin
                         Picture = destPath
                     };
 
-                    // Сохраняем в БД
                     var dbManager = new DatabaseManager();
                     dbManager.AddProduct(newProduct);
 
@@ -81,10 +78,13 @@ namespace ComputerClub.Admin
 
         private string CopyImageToFolder()
         {
-            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(_imagePath);
+            string fileName = Path.GetFileName(_imagePath);
+            
             var destPath = Path.Combine(_imageFolder, fileName);
-            File.Copy(_imagePath, destPath);
-            return destPath;
+            
+            File.Copy(_imagePath, destPath, true);
+            
+            return fileName;
         }
 
         private bool ValidateInput()

@@ -47,6 +47,7 @@ namespace ComputerClub.Users
                 if (_dbManager.ConfirmBooking(_bookingId, _userId, _totalAmount))
                 {
                     MessageBox.Show("Оплата прошла успешно!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                    _dbManager.InsertUserAction("Бронирование", CurrentUser.Instance.Id);
                     CloseWindow();
                 }
                 else

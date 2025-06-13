@@ -1,0 +1,30 @@
+﻿<Window x:Class="ComputerClub.Admin.ChartDetailWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:oxy="http://oxyplot.org/wpf"
+        mc:Ignorable="d"
+        Title="Детальный график" Height="600" Width="800"
+        WindowStartupLocation="CenterScreen">
+    
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <Border Grid.Row="0" Background="White" CornerRadius="8" Padding="10">
+            <oxy:PlotView Name="ChartPlotView"/>
+        </Border>
+        
+        <Button Grid.Row="1" Content="Закрыть" 
+                HorizontalAlignment="Right" 
+                Margin="0,10,0,0" 
+                Padding="15,5"
+                Background="#FFCE0000"
+                Foreground="White"
+                FontWeight="Bold"
+                Click="CloseButton_Click"/>
+    </Grid>
+</Window>

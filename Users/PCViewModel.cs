@@ -11,8 +11,8 @@ namespace ComputerClub.Users
         private readonly int _userId;
         private readonly DatabaseManager _databaseManager;
 
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
+        public DateTime StartTime { get; set; } = DateTime.Now;
+        public DateTime EndTime { get; set; } = DateTime.Now;
 
         public string Status => _pc.Activity ? "Занят" : "Свободен";
         public bool IsAvailable => !_pc.Activity;
@@ -84,13 +84,18 @@ namespace ComputerClub.Users
 
 public class RelayCommand : ICommand
 {
-    private readonly Action _execute;
-    private readonly Func<bool> _canExecute;
+    private readonly Action<object> _execute;
+    private readonly Func<object, bool> _canExecute;
 
-    public RelayCommand(Action execute, Func<bool> canExecute = null)
+    public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
     {
         _execute = execute ?? throw new ArgumentNullException(nameof(execute));
-        _canExecute = canExecute ?? (() => true);
+        _canExecute = canExecute ?? (param => true);
+    }
+
+    public RelayCommand(Action execute, Func<bool> canExecute = null)
+        : this(_ => execute(), _ => canExecute?.Invoke() ?? true)
+    {
     }
 
     public event EventHandler CanExecuteChanged
@@ -99,7 +104,7 @@ public class RelayCommand : ICommand
         remove => CommandManager.RequerySuggested -= value;
     }
 
-    public bool CanExecute(object parameter) => _canExecute();
+    public bool CanExecute(object parameter) => _canExecute(parameter);
 
-    public void Execute(object parameter) => _execute();
+    public void Execute(object parameter) => _execute(parameter);
 }

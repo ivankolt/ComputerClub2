@@ -1,0 +1,106 @@
+﻿
+<UserControl x:Class="ComputerClub.Manager.EmployeesControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ComputerClub.Manager"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="900">
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Управление работниками" 
+                   FontSize="24" 
+                   FontWeight="Bold" 
+                   Margin="20,20,20,10"
+                   Foreground="#E31E24"/>
+
+        <!-- Employees DataGrid -->
+        <ScrollViewer Grid.Row="1"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Auto"
+                      Margin="20,10,20,10">
+            <DataGrid x:Name="dgEmployees" 
+                     AutoGenerateColumns="False"
+                     IsReadOnly="True"
+                     SelectionMode="Single"
+                     BorderBrush="#E31E24"
+                     AlternatingRowBackground="#FFE6E6E6"
+                     Background="White"
+                     GridLinesVisibility="All"
+                     HorizontalGridLinesBrush="#FFC0C0C0"
+                     VerticalGridLinesBrush="#FFC0C0C0"
+                     RowHeight="35"
+                     MouseDoubleClick="dgEmployees_MouseDoubleClick">
+
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="FontSize" Value="14"/>
+                        <Setter Property="Background" Value="#FFCE0000"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Padding" Value="5"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="FontWeight" Value="Normal"/>
+                        <Setter Property="Padding" Value="5"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FFE6E6E6"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#FFCE0000"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="100"/>
+                    <DataGridTextColumn Header="ФИО" Binding="{Binding FullName}" Width="260"/>
+                    <DataGridTextColumn Header="Телефон" Binding="{Binding PhoneNumber}" Width="150"/>
+                    <DataGridTextColumn Header="Должность" Binding="{Binding Position}" Width="170"/>
+                    <DataGridTextColumn Header="Дата найма" Binding="{Binding HireDate, StringFormat=dd.MM.yyyy}" Width="120"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </ScrollViewer>
+
+        <Grid Grid.Row="2" Margin="20,10,20,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="btnAddEmployee" 
+                    Content="Принять сотрудника" 
+                    Click="btnAddEmployee_Click"
+                    Padding="15,8" 
+                    Margin="0,0,10,0"
+                    Background="#E31E24" 
+                    Foreground="White" 
+                    BorderThickness="0" FontWeight="Bold"/>
+
+            <Button x:Name="btnFireEmployee" 
+                    Grid.Column="1"
+                    Content="Уволить сотрудника" 
+                    Click="btnFireEmployee_Click"
+                    Padding="15,8" 
+                    Margin="10,0,0,0"
+                    Background="#E31E24" 
+                    Foreground="White" 
+                    BorderThickness="0" FontWeight="Bold"/>
+        </Grid>
+    </Grid>
+</UserControl>
+

@@ -15,6 +15,8 @@ namespace ComputerClub.Admin
         public string Category { get; set; }
         public string Picture { get; set; }
 
+        public bool Deleted { get; set; } 
+
         public string FullImagePath => $"/Image/{Picture}";
     }
 }

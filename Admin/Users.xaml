@@ -10,8 +10,13 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
-        <DataGrid Name="dataGrid" Grid.Row="0"
+
+        <!-- Обертка DataGrid в ScrollViewer -->
+        <ScrollViewer Grid.Row="0" 
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Auto"
+                      Margin="0,50,0,10">
+            <DataGrid Name="dataGrid"
                   AutoGenerateColumns="True" 
                   IsReadOnly="True" 
                   CanUserAddRows="False" 
@@ -22,38 +27,45 @@
                   SelectionMode="Single" 
                   RowHeight="35" 
                   FontSize="14" 
-                  AlternatingRowBackground="#FFEAF6FF" 
+                  AlternatingRowBackground="#FFE6E6E6" 
                   Background="White" 
-                  BorderBrush="#FFC0C0C0" 
+                  BorderBrush="#E31E24" 
                   BorderThickness="1" 
                   GridLinesVisibility="All" 
                   HorizontalGridLinesBrush="#FFC0C0C0" 
-                  VerticalGridLinesBrush="#FFC0C0C0" 
-                  Margin="0,50,0,10">
-            <DataGrid.ColumnHeaderStyle>
-                <Style TargetType="DataGridColumnHeader">
-                    <Setter Property="FontWeight" Value="Bold"/>
-                    <Setter Property="FontSize" Value="14"/>
-                    <Setter Property="Background" Value="#FFD9EAF7"/>
-                    <Setter Property="Foreground" Value="Black"/>
-                    <Setter Property="Padding" Value="5"/>
-                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                </Style>
-            </DataGrid.ColumnHeaderStyle>
-            <DataGrid.RowStyle>
-                <Style TargetType="DataGridRow">
-                    <Setter Property="Foreground" Value="Black"/>
-                    <Setter Property="FontWeight" Value="Normal"/>
-                    <Setter Property="Padding" Value="5"/>
-                    <Setter Property="Cursor" Value="Hand"/>
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="#FFD9EAF7"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </DataGrid.RowStyle>
-        </DataGrid>
+                  VerticalGridLinesBrush="#FFC0C0C0"
+                  MouseDoubleClick="DataGrid_MouseDoubleClick">
+
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="FontSize" Value="14"/>
+                        <Setter Property="Background" Value="#FFCE0000"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Padding" Value="5"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="FontWeight" Value="Normal"/>
+                        <Setter Property="Padding" Value="5"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FFE6E6E6"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#FFCE0000"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
+            </DataGrid>
+        </ScrollViewer>
 
         <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top" Margin="0,3,0,10">
             <TextBlock Text="Поиск:" VerticalAlignment="Center" Margin="0 0 5 0" FontWeight="Bold"/>
@@ -64,6 +76,7 @@
                      Padding="10" 
                      FontSize="16" 
                      FontWeight="Bold"/>
+            
         </StackPanel>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 10">
@@ -84,6 +97,15 @@
                     FontWeight="Bold" 
                     Margin="10 0" 
                     Click="Button_Click_1" FontSize="12"/>
+
+            <Button Content="Сформировать отчёт активностей" 
+Background="#FFCE0000" 
+Foreground="White"
+Width="220" 
+Height="35" 
+FontWeight="Bold" 
+Margin="10 0" 
+ FontSize="12" Click="Button_Click_2"/>
         </StackPanel>
     </Grid>
 </UserControl>

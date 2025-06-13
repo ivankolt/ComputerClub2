@@ -1,5 +1,6 @@
 ﻿using ComputerClub.Admin;
 using ComputerClub.BD;
+using ComputerClub.Manager;
 using ComputerClub.Registration;
 using ComputerClub.Users;
 using System;
@@ -21,6 +22,7 @@ namespace ComputerClub.Entrance
 {
     public partial class Input : Window
     {
+        DatabaseManager databaseManager = new DatabaseManager();
         public Input()
         {
             InitializeComponent();
@@ -45,34 +47,17 @@ namespace ComputerClub.Entrance
             }
         }
 
-        private void Login_GotFocus2(object sender, RoutedEventArgs e)
-        {
-            if (Password.Text == "Пароль")
-            {
-                Password.Text = string.Empty;
-            }
-        }
-
-        private void Login_LostFocus2(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrEmpty(Password.Text))
-            {
-                Password.Text = "Пароль";
-            }
-        }
-
+   
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             string username = Login.Text.Trim();
-            string password = Password.Text.Trim();
+            string password = Password.Password.Trim();
 
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
                 MessageBox.Show("Введите логин и пароль.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-
-            DatabaseManager databaseManager = new DatabaseManager();
 
             string userRole = databaseManager.AuthenticateUser(username, password);
 
@@ -88,7 +73,7 @@ namespace ComputerClub.Entrance
                     OpenAdminInterface();
                     break;
 
-                case "user":
+                case "users":
                     MessageBox.Show($"Добро пожаловать, Пользователь {username}!", "Успешная авторизация", MessageBoxButton.OK, MessageBoxImage.Information);
                     OpenUserInterface();
                     break;
@@ -107,18 +92,33 @@ namespace ComputerClub.Entrance
         {
             this.Hide();
             Administrator adminWindow = new Administrator();
+            CurrentUser.Instance.EmployeeId = databaseManager.CurrentEmployee(CurrentUser.Instance.Id);
             adminWindow.Show();
         }
         private void OpenUserInterface()
         {
-            this.Hide();
-            UsersWindow userWindow = new UsersWindow();
-            userWindow.Show();
+            bool Answer = false;
+            string Reason = null;
+
+            (Answer, Reason) = databaseManager.BlockedOrNot(CurrentUser.Instance.Id);
+            databaseManager.InsertUserAction("Вход", CurrentUser.Instance.Id);
+            if (Answer != true)
+            {
+                this.Hide();
+                UsersWindow userWindow = new UsersWindow();
+                databaseManager.IsActive(CurrentUser.Instance.Id);
+                userWindow.Show();
+            }
+            else 
+            {
+                MessageBox.Show("Вас заблокировали по причине " + Reason + "! ");
+            }
+
         }
         private void OpenManagerInterface()
         {
             this.Hide();
-            Administrator managerWindow = new Administrator();
+            var managerWindow = new ManagerWindow();
             managerWindow.Show();
         }
 

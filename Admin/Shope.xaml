@@ -6,6 +6,11 @@
              xmlns:local="clr-namespace:ComputerClub.Admin"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    
+    <UserControl.Resources>
+        <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </UserControl.Resources>
+
     <Grid Margin="10">
         <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="10,10,180,10">
             <ItemsControl x:Name="ProductsList">
@@ -18,15 +23,12 @@
                             CornerRadius="10" 
                             Margin="10">
                             <Grid>
-                                <!-- Фиксированная ширина для колонки с изображением -->
+
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="100" />
-                                    <!-- Фиксировано -->
                                     <ColumnDefinition Width="*" />
-                                    <!-- Остальное пространство -->
                                 </Grid.ColumnDefinitions>
 
-                                <!-- Изображение -->
                                 <Image 
                                     Grid.Column="0" 
                                     Source="{Binding FullImagePath}" 
@@ -37,7 +39,7 @@
                                     VerticalAlignment="Center" 
                                     Margin="5" />
 
-                                <!-- Текстовая информация -->
+
                                 <StackPanel 
                                     Grid.Column="1" 
                                     Orientation="Vertical" 
@@ -58,6 +60,33 @@
                                     <TextBlock 
                                         Text="{Binding QuantityStore}" 
                                         FontSize="12"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button 
+                                            Content="✏️" 
+                                            ToolTip="Изменить товар"
+                                            Click="EditProduct_Click"
+                                            Tag="{Binding Id}"
+                                            Margin="0 0 5 0"
+                                            Background="Transparent"
+                                            BorderThickness="0"/>
+                                        <Button 
+                                            Content="❌" 
+                                            ToolTip="Архивировать товар"
+                                            Visibility="{Binding Deleted, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=invert}"
+                                            Click="ArchiveProduct_Click"
+                                            Tag="{Binding Id}"
+                                            Margin="0 0 5 0"
+                                            Background="Transparent"
+                                            BorderThickness="0"/>
+                                        <Button 
+                                            Content="✅" 
+                                            ToolTip="Восстановить товар"
+                                            Visibility="{Binding Deleted, Converter={StaticResource BoolToVisibilityConverter}}"
+                                            Click="RestoreProduct_Click"
+                                            Tag="{Binding Id}"
+                                            Background="Transparent"
+                                            BorderThickness="0"/>
+                                    </StackPanel>
                                 </StackPanel>
                             </Grid>
                         </Border>
@@ -71,7 +100,6 @@
             HorizontalAlignment="Right" 
             Margin="0,0,20,0" 
             VerticalAlignment="Bottom">
-            <!-- Кнопки с унифицированными отступами -->
             <Button 
                 Content="Обновить список" 
                 Width="150" Height="30" 

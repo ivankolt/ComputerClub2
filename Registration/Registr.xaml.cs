@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ComputerClub.Entrance;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
@@ -44,8 +45,9 @@ namespace ComputerClub.Registration
             if (!string.IsNullOrEmpty(PasswordMail.Text) && PasswordMail.Text == GeneratedPassword)
             {
                 IsPasswordConfirmed = true;
-                MessageBox.Show("Пароль подтвержден. Вы зарегистрированы!", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
-                Close();
+                var input = new Input();
+                input.Show();
+                this.Close();
             }
             else
             {

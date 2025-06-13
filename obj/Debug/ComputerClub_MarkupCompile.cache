@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\User\source\repos\ComputerClub\ComputerClub\App.xaml
-2071152211
+36227403919
 
-331459172030
-39266329572
-Admin\AddProductWindow.xaml;Admin\BlockUserWindow.xaml;Admin\OrderHistoryWindow.xaml;Admin\ReceiveProductsWindow.xaml;Admin\Shope.xaml;Admin\TopUpBalanceWindow.xaml;Users\ClubCardView.xaml;Users\ConfirmationWindow.xaml;Users\MapViewUsers.xaml;Users\PCInfoWindow.xaml;Users\UserAccountView.xaml;Users\UserShopView.xaml;Users\UsersWindow.xaml;Admin\Administrator.xaml;Admin\MapView.xaml;Admin\Users.xaml;Entrance\Input.xaml;MainWindow.xaml;Registration\Reg.xaml;Registration\Registr.xaml;
+51-1083856680
+64600661998
+Admin\AddProductWindow.xaml;Admin\BlockUserWindow.xaml;Admin\BookingDetailsWindow.xaml;Admin\ChartDetailWindow.xaml;Admin\DashboardControl.xaml;Admin\EditProductWindow.xaml;Admin\OrderDetailsWindow.xaml;Admin\OrderHistoryWindow.xaml;Admin\OrdersManagementControl.xaml;Admin\Payments.xaml;Admin\ReceiptDetailsWindow.xaml;Admin\ReceiveProductsWindow.xaml;Admin\ShiftControl.xaml;Admin\Shope.xaml;Admin\TopUpBalanceWindow.xaml;Manager\AddEmployeeWindow.xaml;Manager\AddPCControl.xaml;Manager\EmployeeDetailsWindow.xaml;Manager\EmployeesControl.xaml;Manager\ManagerWindow.xaml;Manager\UserDetailsWindow.xaml;Manager\UsersControl.xaml;Users\ClubCardView.xaml;Users\ConfirmationWindow.xaml;Users\MapViewUsers.xaml;Users\PCInfoWindow.xaml;Users\UserAccountView.xaml;Users\UserShopView.xaml;Users\UsersWindow.xaml;Admin\Administrator.xaml;Admin\MapView.xaml;Admin\Users.xaml;Entrance\Input.xaml;MainWindow.xaml;Registration\Reg.xaml;Registration\Registr.xaml;
 
 False
 

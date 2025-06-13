@@ -30,8 +30,8 @@ namespace ComputerClub.Registration
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             string username = Login.Text.Trim();
-            string password = Password.Text.Trim();
-            string confirmPassword = Password2.Text.Trim();
+            string password = Password.Password.Trim();
+            string confirmPassword = Password2.Password.Trim();
             string email = Mail.Text.Trim();
             string firstName = FirstName.Text.Trim();
             string lastName = LastName.Text.Trim();
@@ -62,6 +62,17 @@ namespace ComputerClub.Registration
                 return;
             }
 
+            if(username.Length <= 6)
+            {
+                MessageBox.Show("Длина логина должна быть больше 5.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (username.Length > 51)
+            {
+                MessageBox.Show("Длина логина должна быть меньше 50.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
             DatabaseManager dbManager = new DatabaseManager();
 
             string generatedPassword = mail.GenerateRandomPassword();
@@ -125,37 +136,8 @@ namespace ComputerClub.Registration
             }
         }
 
-        private void Login_GotFocus2(object sender, RoutedEventArgs e)
-        {
-            if (Password.Text == "Пароль")
-            {
-                Password.Text = string.Empty;
-            }
-        }
-
-        private void Login_LostFocus2(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrEmpty(Password.Text))
-            {
-                Password.Text = "Пароль";
-            }
-        }
- 
-        private void Login_GotFocus3(object sender, RoutedEventArgs e)
-        {
-            if (Password2.Text == "Повторите пароль")
-            {
-                Password2.Text = string.Empty;
-            }
-        }
-
-        private void Login_LostFocus3(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrEmpty(Password2.Text))
-            {
-                Password2.Text = "Повторите пароль";
-            }
-        }
+    
+        
         private void FirstName_GotFocus(object sender, RoutedEventArgs e)
         {
             if (FirstName.Text == "Имя")

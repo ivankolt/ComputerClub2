@@ -20,21 +20,21 @@
             </Border.Clip>
             <Grid>
                 <StackPanel Margin="0 120 0 0" VerticalAlignment="Top">
-                    <TextBlock FontWeight="Bold" FontSize="46" Foreground="White" TextAlignment="Center" Text="Привет"/>
+                    <TextBlock FontWeight="Bold" FontSize="46" Foreground="White" TextAlignment="Center" Text="Добро&#x0a;Пожаловать!!!"/>
                     <TextBlock FontWeight="Light" FontSize="18" Foreground="White" TextAlignment="Center" Text="Регестрация"/>
 
                 </StackPanel>
 
                 <Ellipse Width="500" Height="500" VerticalAlignment="Bottom"
-                         Fill="#FFCE0000" Margin="50 0 0 -200" Opacity="0.6"/>
+                         Fill="#FF003CCE" Margin="50 0 0 -200" Opacity="0.6"/>
                 <Ellipse Width="300" Height="300" VerticalAlignment="Bottom"
-                         Fill="#FFCE0000" Margin="-450 0 0 30" Opacity="0.3"/>
+                         Fill="#FF003CCE" Margin="-450 0 0 30" Opacity="0.3"/>
                 <Ellipse Width="400" Height="400" VerticalAlignment="Bottom"
-                         Fill="#FFCE0000" Margin="-320 0 0 -120" Opacity="0.3"/>
+                         Fill="#FF003CCE" Margin="-320 0 0 -120" Opacity="0.3"/>
                 <Ellipse Width="250" Height="250" VerticalAlignment="Bottom"
-                         Fill="#FFCE0000" Margin="-380 0 0 -120" />
+                         Fill="#FF003CCE" Margin="-380 0 0 -120" />
                 <Ellipse Width="400" Height="400" VerticalAlignment="Bottom"
-                         Fill="#FFCE0000" Margin="280 0 0 -70" Opacity="0.8"/>
+                         Fill="#FF003CCE" Margin="280 0 0 -70" Opacity="0.8"/>
 
             </Grid>
         </Border>
@@ -43,8 +43,8 @@
             <Grid Margin="60 0 60 0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="45"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="421*"/>
+                    <RowDefinition Height="139*"/>
                 </Grid.RowDefinitions>
                 <Button Margin="364,6,-52,7" Foreground="White" BorderBrush="White" Click="Button_Click_1">
                     <Button.Template>
@@ -59,50 +59,57 @@
 
 
                 <StackPanel Margin="0,22,0,0" Grid.RowSpan="2">
-                    <Border  Background="#FFCE0000" Width="320" CornerRadius="5" Height="40" Margin="6" Opacity="0.7">
+                    <Border  Background="#FF003CCE" Width="320" CornerRadius="5" Height="40" Margin="6" Opacity="0.7">
 
                         <TextBox x:Name="Login" Background="Transparent" BorderThickness="0" Text="Логин" VerticalAlignment="Center" GotFocus="Login_GotFocus" LostFocus="Login_LostFocus" Margin="20,0,10,0"  />
 
                     </Border>
 
 
-                    <Border Background="#FFCE0000" Width="320" CornerRadius="5" Height="40" Margin="6" Opacity="0.7">
+                    <Border Background="#FF003CCE" Width="320" CornerRadius="5" Height="40" Margin="6" Opacity="0.7">
                         <TextBox x:Name="Mail" Background="Transparent" BorderThickness="0" Text="Почта" VerticalAlignment="Center"
                             GotFocus="Login_GotFocus1" LostFocus="Login_LostFocus1" Margin="20,0,10,0"/>
                     </Border>
-                    <Border Background="#FFCE0000" Width="320" CornerRadius="5" Height="40" Margin="6" Opacity="0.7">
-                        <TextBox x:Name ="Password" Background="Transparent" BorderThickness="0" Text="Пароль" VerticalAlignment="Center"   GotFocus="Login_GotFocus2" LostFocus="Login_LostFocus2" Margin="20,0,10,0"/>
 
 
-                    </Border>
-                    <Border Background="#FFCE0000" Width="320" CornerRadius="5" Height="40" Margin="6" Opacity="0.7">
-                        <TextBox x:Name="Password2" Background="Transparent" BorderThickness="0" Text="Повторите пароль" VerticalAlignment="Center"   GotFocus="Login_GotFocus3" LostFocus="Login_LostFocus3" Margin="20,0,10,0"/>
 
-
-                    </Border>
-
-                    <Border Background="#FFCE0000" Width="320" CornerRadius="5" Height="40" Margin="6" Opacity="0.7">
+                    <Border Background="#FF003CCE" Width="320" CornerRadius="5" Height="40" Margin="6" Opacity="0.7">
                         <TextBox x:Name="FirstName" Background="Transparent" BorderThickness="0" Text="Имя" VerticalAlignment="Center"   GotFocus="FirstName_GotFocus" LostFocus="FirstName_LostFocus" Margin="20,0,10,0"/>
 
 
                     </Border>
 
-                    <Border Background="#FFCE0000" Width="320" CornerRadius="5" Height="40" Margin="6" Opacity="0.7">
+                    <Border Background="#FF003CCE" Width="320" CornerRadius="5" Height="40" Margin="6" Opacity="0.7">
                         <TextBox x:Name="LastName" Background="Transparent" BorderThickness="0" Text="Фамилия" VerticalAlignment="Center"   GotFocus="LastName_GotFocus" LostFocus="LastName_LostFocus" Margin="20,0,10,0"/>
                     </Border>
 
-                    <Border Background="#FFCE0000" Width="320" CornerRadius="5" Height="40" Margin="6" Opacity="0.7">
+                    <Border Background="#FF003CCE" Width="320" CornerRadius="5" Height="40" Margin="6" Opacity="0.7">
                         <TextBox x:Name="PhoneNumber" Background="Transparent" BorderThickness="0" Text="Номер телефона" VerticalAlignment="Center"   GotFocus="PhoneNumber_GotFocus" LostFocus="PhoneNumber_LostFocus" Margin="20,0,10,0"/>
                     </Border>
+                    <Border Background="Transparent" Width="111" CornerRadius="5" Height="24" Margin="6" Opacity="0.7">
+                        <TextBlock Text="Пароль" HorizontalAlignment="Center"/>
+                    </Border>
+                    <Border Background="#FF003CCE" Width="320" CornerRadius="5" Height="40" Margin="6" Opacity="0.7">
+                        <PasswordBox x:Name="Password" Background="Transparent" BorderThickness="0" VerticalAlignment="Center" Margin="20,0,10,0" 
+    PasswordChar="•"/>
+                    </Border>
+
+                    <Border Background="#FF003CCE" Width="320" CornerRadius="5" Height="40" Margin="6" Opacity="0.7">
+                        <PasswordBox x:Name="Password2" Background="Transparent" BorderThickness="0" VerticalAlignment="Center" Margin="20,0,10,0" 
+       PasswordChar="•"/>
+                    </Border>
+
 
                     <Border Background="Transparent" Width="111" CornerRadius="5" Height="24" Margin="6" Opacity="0.7">
                         <Button Content ="Есть аккаунт? Вход" FontSize="12" BorderBrush="Transparent" Background="Transparent" Foreground="Black" Click="Button_Click_2"/>
                     </Border>
 
 
+
+
                 </StackPanel>
-                <Border VerticalAlignment="Top" Grid.Row="2" Background="#FFCE0000" Height="50" Width="250" CornerRadius="10">
-                    <Button Content="Регистрация" Background="#FFCE0000" Margin="5" Foreground="White" FontSize="23" BorderThickness="0" Click="Button_Click" FontWeight="Bold">
+                <Border VerticalAlignment="Top" Grid.Row="2" Background="#FF003CCE" Height="50" CornerRadius="10" Margin="47,0,47,0">
+                    <Button Content="Регистрация" Background="#FF003CCE" Margin="5" Foreground="White" FontSize="23" BorderThickness="0" Click="Button_Click" FontWeight="Bold">
 
                     </Button>
 

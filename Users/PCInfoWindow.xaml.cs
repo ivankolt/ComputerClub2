@@ -25,6 +25,9 @@ namespace ComputerClub.Users
         public PCInfoWindow(PC pc, int userId)
         {
             InitializeComponent();
+            StartDateTimePicker.Value = DateTime.Now;
+            EndDateTimePicker.Value = DateTime.Now;
+
             DataContext = new PCViewModel(pc, userId, _databaseManager);
         }
     }

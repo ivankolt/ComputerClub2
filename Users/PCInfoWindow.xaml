@@ -38,7 +38,6 @@
         <TextBlock Grid.Row="5" Text="Процессор:" FontWeight="Bold"/>
         <TextBlock Grid.Row="5" Text="{Binding CPU}" Margin="120 0 0 0" HorizontalAlignment="Left"/>
 
-        <!-- Выбор времени бронирования -->
         <TextBlock Grid.Row="6" Text="Начало бронирования:" FontWeight="Bold"/>
         <xctk:DateTimePicker 
             Grid.Row="6" 
@@ -47,7 +46,7 @@
             FormatString="dd/MM/yyyy HH:mm" 
             Margin="230,0,0,0" 
             FontWeight="Bold"
-            Value="{Binding StartTime, UpdateSourceTrigger=PropertyChanged}"/>  
+            Value="{Binding StartTime, UpdateSourceTrigger=PropertyChanged}"/>
 
         <TextBlock Grid.Row="7" Text="Окончание бронирования:" FontWeight="Bold"/>
 

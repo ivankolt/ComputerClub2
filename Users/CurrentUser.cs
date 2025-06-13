@@ -11,5 +11,7 @@ namespace ComputerClub.Users
         public int Id { get; set; }
         public string Role { get; set; }
         public static CurrentUser Instance { get; set; } = new CurrentUser(); // Синглтон
+
+        public int EmployeeId { get; set; }
     }
 }

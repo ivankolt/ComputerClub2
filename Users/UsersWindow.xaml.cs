@@ -55,5 +55,10 @@ namespace ComputerClub.Users
             var accountView = new UserAccountView();
             MainContent.Content = accountView;
         }
+
+        private void MenuItem_Click_5(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }

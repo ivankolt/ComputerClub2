@@ -27,6 +27,7 @@ namespace ComputerClub.Admin
         {
             InitializeComponent();
             LoadPCs();
+            _databaseManager.UpdatePCStatusForExpiredBookings();
         }
         private void LoadPCs()
         {
@@ -45,7 +46,7 @@ namespace ComputerClub.Admin
         { "Кокпит", CreateZoneContainer("Кокпит", mainStackPanel) }
     };
 
-            // Получаем список ПК из базы данных
+  
             var pcs = _databaseManager.GetPCs();
 
             foreach (var pc in pcs)
@@ -53,7 +54,7 @@ namespace ComputerClub.Admin
            
                 if (zoneContainers.ContainsKey(pc.Zone))
                 {
-                    // Создаем кнопку для ПК
+          
                     var button = new Button
                     {
                         Content = $"  {pc.Id}",
@@ -75,14 +76,13 @@ namespace ComputerClub.Admin
                 }
             }
 
-            // Добавляем внешнюю StackPanel на главную панель
+ 
             PcWrapPanel.Children.Add(mainStackPanel);
         }
 
-        // Метод для создания заголовка и контейнера для зоны
         private WrapPanel CreateZoneContainer(string zoneName, StackPanel parentPanel)
         {
-            // Создаем заголовок зоны
+
             var zoneLabel = new Label
             {
                 Content = zoneName,
@@ -92,7 +92,6 @@ namespace ComputerClub.Admin
                 HorizontalContentAlignment = HorizontalAlignment.Center
             };
 
-            // Создаем контейнер для кнопок ПК
             var wrapPanel = new WrapPanel { Margin = new Thickness(10) };
 
             parentPanel.Children.Add(zoneLabel);

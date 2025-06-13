@@ -1,5 +1,8 @@
-﻿using System.Windows;
+﻿using System;
+using System.Globalization;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using ComputerClub.BD;
 
 namespace ComputerClub.Admin
@@ -11,18 +14,55 @@ namespace ComputerClub.Admin
         public Shope()
         {
             InitializeComponent();
-            FetchProducts(); // Загружаем товары при создании UserControl
+            FetchProducts(); 
         }
 
-        private void FetchProducts()
+        private async void FetchProducts()
         {
-            var products = _databaseManager.GetProducts();
-            ProductsList.ItemsSource = products; 
+                var products = await _databaseManager.GetProducts(); 
+                ProductsList.ItemsSource = products;    
         }
-
+        
         private void UpdateProducts_Click(object sender, RoutedEventArgs e)
         {
-            FetchProducts(); // Просто обновляем список товаров
+            FetchProducts(); 
+        }
+
+        private async void ArchiveProduct_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.Tag is int productId)
+            {
+                await _databaseManager.ExecuteStoredProcedure("CALL archive_product(@id)", productId);
+                FetchProducts();
+            }
+        }
+
+        private async void RestoreProduct_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.Tag is int productId)
+            {
+                await _databaseManager.ExecuteStoredProcedure("CALL restore_product(@id)", productId);
+                FetchProducts();
+            }
+        }
+
+        private void EditProduct_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.Tag is int productId)
+            {
+                // Find the product in the current list
+                var products = ProductsList.ItemsSource as System.Collections.Generic.List<Product>;
+                var product = products?.Find(p => p.Id == productId);
+                
+                if (product != null)
+                {
+                    var editWindow = new EditProductWindow(product);
+                    if (editWindow.ShowDialog() == true)
+                    {
+                        FetchProducts(); // Refresh the list after editing
+                    }
+                }
+            }
         }
 
         private void AddProduct_Click(object sender, RoutedEventArgs e)
@@ -46,4 +86,5 @@ namespace ComputerClub.Admin
             historyWindow.ShowDialog();
         }
     }
+    
 }

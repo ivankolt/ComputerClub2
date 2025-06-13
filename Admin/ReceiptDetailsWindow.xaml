@@ -1,0 +1,118 @@
+﻿<Window x:Class="ComputerClub.Admin.ReceiptDetailsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Детали чека"
+        WindowStartupLocation="CenterScreen"
+        Height="550" Width="450">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="White" BorderBrush="#FFCE0000" BorderThickness="1" Padding="15" Margin="0,0,0,15">
+            <StackPanel>
+                <TextBlock Text="Компьютерный клуб" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,5"/>
+                <TextBlock Text="ИНН: 123456789012" FontSize="12" HorizontalAlignment="Center" Margin="0,0,0,5"/>
+                <TextBlock Text="г. Магнитогорск, ул. Труда, д. 26" FontSize="12" HorizontalAlignment="Center"/>
+                <Separator Margin="0,10,0,10"/>
+                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Чек №:" FontWeight="Bold" Margin="0,0,10,5"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding ReceiptId}" Margin="0,0,0,5"/>
+                    
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Дата:" FontWeight="Bold" Margin="0,0,10,5"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding CreatedAt, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}" Margin="0,0,0,5"/>
+                    
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Кассир:" FontWeight="Bold" Margin="0,0,10,5"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding CashierName}" Margin="0,0,0,5"/>
+                    
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Клиент:" FontWeight="Bold" Margin="0,0,10,5"/>
+                    <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding CustomerName}" Margin="0,0,0,5"/>
+                </Grid>
+            </StackPanel>
+        </Border>
+        <Border Grid.Row="1" Background="White" Height="230" BorderBrush="#FFCE0000" BorderThickness="1" Padding="15">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Позиции чека" FontWeight="Bold" Margin="0,0,0,10"/>
+
+                <!-- Основной контейнер для ListView с прокруткой -->
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <ListView ItemsSource="{Binding Items}" BorderThickness="0"
+                      ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Наименование" Width="180" DisplayMemberBinding="{Binding Name}"/>
+                                <GridViewColumn Header="Кол-во" Width="60" DisplayMemberBinding="{Binding Quantity}"/>
+                                <GridViewColumn Header="Цена" Width="70" DisplayMemberBinding="{Binding Price}"/>
+                                <GridViewColumn Header="Сумма" Width="70" DisplayMemberBinding="{Binding Total}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </ScrollViewer>
+
+                <Separator Grid.Row="2" Margin="0,15,0,15"/>
+
+                <Grid Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Итого:" FontWeight="Bold" HorizontalAlignment="Right" Margin="0,0,10,5"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding TotalAmount}" FontWeight="Bold" Margin="0,0,0,5"/>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Способ оплаты:" FontWeight="Bold" HorizontalAlignment="Right" Margin="0,0,10,5"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding PaymentMethod}" Margin="0,0,0,5"/>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="2" Margin="0,15,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <Button Grid.Column="0" Content="Скачать чек" 
+                    HorizontalAlignment="Center" 
+                    Padding="20,5"
+                    Background="#FFCE0000"
+                    Foreground="White"
+                    FontWeight="Bold"
+                    Margin="0,0,5,0"
+                    Click="SaveAsImageButton_Click"/>
+                    
+            <Button Grid.Column="1" Content="Закрыть" 
+                    HorizontalAlignment="Center" 
+                    Padding="20,5"
+                    Background="#FFCE0000"
+                    Foreground="White"
+                    FontWeight="Bold"
+                    Margin="5,0,0,0"
+                    Click="CloseButton_Click"/>
+        </Grid>
+    </Grid>
+</Window>

@@ -64,22 +64,21 @@
             </Border.Clip>
             <Grid>
                 <Ellipse Width="500" Height="500" VerticalAlignment="Bottom"
-       Fill="#FFCE0000" Margin="50 0 0 -200" Opacity="0.6"/>
+       Fill="#FF003CCE" Margin="50 0 0 -200" Opacity="0.6"/>
                 <Ellipse Width="300" Height="300" VerticalAlignment="Bottom"
-       Fill="#FFCE0000" Margin="-450 0 0 30" Opacity="0.3"/>
+       Fill="#FF003CCE" Margin="-450 0 0 30" Opacity="0.3"/>
                 <Ellipse Width="400" Height="400" VerticalAlignment="Bottom"
-       Fill="#FFCE0000" Margin="-320 0 0 -120" Opacity="0.3"/>
+       Fill="#FF003CCE" Margin="-320 0 0 -120" Opacity="0.3"/>
                 <Ellipse Width="250" Height="250" VerticalAlignment="Bottom"
-       Fill="#FFCE0000" Margin="-380 0 0 -120" />
+       Fill="#FF003CCE" Margin="-380 0 0 -120" />
                 <Ellipse Width="400" Height="400" VerticalAlignment="Bottom"
        Fill="#FFCE0000" Margin="280 0 0 -70" Opacity="0.8"/>
 
                 <StackPanel VerticalAlignment="Center" Height="605">
                     <Menu Style="{StaticResource MainMenuStyle}" Margin="0 0 20 0" Width="261">
-                        <Separator Width="120" Height="25" Background="#00212121" FontSize="8">
-                        </Separator>
-                        <Separator Width="120" Height="25" Background="#00212121" FontSize="8">
-                        </Separator>
+                        <MenuItem Header="X" Style="{StaticResource ModernMenuItem}" FontWeight="Bold" FontSize="25"  Click="MenuItem_Click_5">
+                        </MenuItem>
+
                         <Separator Width="120" Height="25" Background="#00212121">
                         </Separator>
                         <Separator Width="130" Height="25" Background="#00212121">

@@ -14,7 +14,6 @@ namespace ComputerClub.Users
 
         private void LoadUserCardInfo()
         {
-            // Получаем данные текущего пользователя
             if (CurrentUser.Instance != null)
             {
                 var dbManager = new DatabaseManager();

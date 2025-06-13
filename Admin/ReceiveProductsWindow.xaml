@@ -6,16 +6,15 @@
         <TextBlock Text="Выберите товар и количество:" FontWeight="Bold" FontSize="16" Margin="0 0 0 20"/>
 
         <StackPanel Orientation="Vertical" Margin="0 20 0 0">
-            <!-- Выбор товара -->
             <TextBlock Text="Товар:" FontWeight="SemiBold"/>
             <ComboBox 
-                x:Name="ProductComboBox" 
-                ItemsSource="{Binding Products}" 
-                DisplayMemberPath="ProductName" 
-                SelectedValuePath="Id" 
-                SelectedValue="{Binding SelectedProductId, Mode=TwoWay}" 
-                Margin="0 5 0 20" 
-                Width="300"/>
+            ItemsSource="{Binding Products, Mode=OneWay}"
+            DisplayMemberPath="ProductName"
+            SelectedValuePath="Id"
+            SelectedValue="{Binding SelectedProductId}"
+            IsSynchronizedWithCurrentItem="True"
+            Margin="0 5 0 20"
+            Width="300"/>
 
             <TextBlock Text="Количество:" FontWeight="SemiBold"/>
             <TextBox 

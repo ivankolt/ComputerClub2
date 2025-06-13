@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.ComponentModel;
+using ComputerClub.Entrance;
 
 namespace ComputerClub.Users
 {
@@ -20,7 +21,7 @@ namespace ComputerClub.Users
         {
             InitializeComponent();
             _currentUserId = CurrentUser.Instance.Id;
-            DataContext = this; // Устанавливаем DataContext один раз
+            DataContext = this;
             LoadUserData();
             LoadReceipts();
         }
@@ -77,6 +78,22 @@ namespace ComputerClub.Users
             else
             {
                 MessageBox.Show("Ошибка при изменении пароля!");
+            }
+        }
+
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            _dbManager.IsNotActive(CurrentUser.Instance.Id);
+            _dbManager.InsertUserAction("Выход", CurrentUser.Instance.Id);
+            CurrentUser.Instance = null;
+
+            var window = Window.GetWindow(this);
+            if (window != null)
+            {
+                var loginWindow = new Input();
+                loginWindow.Show();
+
+                window.Close();
             }
         }
     }

@@ -83,9 +83,9 @@ namespace ComputerClub.Users
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private void LoadProducts()
+        private async void LoadProducts()
         {
-            ProductsList.ItemsSource = _db.GetAvailableProducts();
+            ProductsList.ItemsSource = await _db.GetAvailableProducts();
         }
 
         private decimal CalculateTotal()
@@ -106,6 +106,11 @@ namespace ComputerClub.Users
                 MessageBox.Show("Товар не найден!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+            if (product.QuantityStore <= 0)
+            {
+                MessageBox.Show("Товара нет в наличии!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
             var existingItem = CartItems.FirstOrDefault(i => i.ProductId == productId);
             if (existingItem != null)
@@ -123,7 +128,6 @@ namespace ComputerClub.Users
                 });
             }
         }
-
         private void PlaceOrder_Click(object sender, RoutedEventArgs e)
         {
             if (CartItems.Count == 0)
@@ -142,6 +146,8 @@ namespace ComputerClub.Users
 
                 MessageBox.Show("Заказ успешно оформлен!");
                 CartItems.Clear();
+                _db.InsertUserAction("Покупка", CurrentUser.Instance.Id);
+                LoadProducts();
             }
             catch (Exception ex)
             {
