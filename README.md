@@ -82,10 +82,13 @@
 Добавьте изображения и видео в папку проекта (например, `images/`), затем вставьте их в README.md так:
 
 ```markdown
-![Окно входа](https://github.com/user-attachments/assets/a8946588-0c3b-4b99-81a2-cebb0312c422)
-![Окно регистрации](https://github.com/user-attachments/assets/4bc3c29c-cf1e-4184-a248-76c61072d055)
-![Окно продаж](https://github.com/user-attachments/assets/e923d6ed-b5a2-4a51-a5da-f29cbcf17201)
-![Окно бронирования пк](https://github.com/user-attachments/assets/a3684252-4682-445a-89b0-dadc212f248f)
+![Окно входа] ![snimok-ekrana-2025-05-13-213251](https://github.com/user-attachments/assets/a8946588-0c3b-4b99-81a2-cebb0312c422)
+
+![Окно регистрации] ![snimok-ekrana-2025-05-13-213327](https://github.com/user-attachments/assets/4bc3c29c-cf1e-4184-a248-76c61072d055)
+
+![Окно продаж] ![snimok-ekrana-2025-03-13-184810](https://github.com/user-attachments/assets/e923d6ed-b5a2-4a51-a5da-f29cbcf17201)
+
+![Окно бронирования пк] ![snimok-ekrana-2025-05-13-213438](https://github.com/user-attachments/assets/a3684252-4682-445a-89b0-dadc212f248f)
 ```
 
 ---
