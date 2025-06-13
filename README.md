@@ -77,13 +77,17 @@
 ## Скриншоты и видео 📸🎬
 
 ```markdown
-![Окно входа] (Images/snimok-ekrana-2025-05-13-213251.png)
+![Окно входа] ![image](https://github.com/user-attachments/assets/a644a0b7-3118-4167-8980-a727046c15be)
 
-![Окно регистрации] (https://github.com/user-attachments/assets/ef0a1969-90b0-4346-884e-6a55a821d675)
 
-![Окно продаж] (https://github.com/user-attachments/assets/c3e8277a-53ac-4b47-a020-cc9bf9ac0793)
+![Окно регистрации] ![image](https://github.com/user-attachments/assets/d925c5cb-fb79-4e61-9dc8-b883d17f79c9)
 
-![Окно бронирования пк] (https://github.com/user-attachments/assets/a88b4be1-573a-4945-97f6-f7c50f1c706e)
+
+![Окно продаж] ![image](https://github.com/user-attachments/assets/669c39c3-24d9-40f4-957e-adb744545b7a)
+
+
+![Окно бронирования пк] ![image](https://github.com/user-attachments/assets/6f044c2e-715e-4101-ae6b-38fe47b73a49)
+
 
 ```
 
