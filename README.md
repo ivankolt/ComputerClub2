@@ -1,4 +1,3 @@
----
 
 ## ComputerClub2 🎮💻
 
@@ -47,7 +46,7 @@
 - user_actions
 - users
 
-[image](https://github.com/user-attachments/assets/40d0b070-80c5-4b18-ad42-24d8313440a4) Структура проекта 🗂️
+(https://github.com/user-attachments/assets/40d0b070-80c5-4b18-ad42-24d8313440a4) Структура проекта 🗂️
 
 - **Admin/** — компоненты для работы администратора
 - **Manager/** — логика управления клубом
@@ -81,13 +80,13 @@
 Добавьте изображения и видео в папку проекта (например, `images/`), затем вставьте их в README.md так:
 
 ```markdown
-![Окно входа] ![image](https://github.com/user-attachments/assets/6bf83b49-b60f-4361-834c-ecb656607441)
+![Окно входа] (https://github.com/user-attachments/assets/6bf83b49-b60f-4361-834c-ecb656607441)
 
-![Окно регистрации] ![image](https://github.com/user-attachments/assets/ef0a1969-90b0-4346-884e-6a55a821d675)
+![Окно регистрации] (https://github.com/user-attachments/assets/ef0a1969-90b0-4346-884e-6a55a821d675)
 
-![Окно продаж] ![image](https://github.com/user-attachments/assets/c3e8277a-53ac-4b47-a020-cc9bf9ac0793)
+![Окно продаж] (https://github.com/user-attachments/assets/c3e8277a-53ac-4b47-a020-cc9bf9ac0793)
 
-![Окно бронирования пк] ![image](https://github.com/user-attachments/assets/a88b4be1-573a-4945-97f6-f7c50f1c706e)
+![Окно бронирования пк] (https://github.com/user-attachments/assets/a88b4be1-573a-4945-97f6-f7c50f1c706e)
 
 ```
 
