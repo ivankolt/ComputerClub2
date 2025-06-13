@@ -78,7 +78,7 @@
 ## Скриншоты и видео 📸🎬
 
 ```markdown
-![Окно входа] (https://github.com/user-attachments/assets/6bf83b49-b60f-4361-834c-ecb656607441)
+![Окно входа] (images/snimok-ekrana-2025-05-13-213251.png)
 
 ![Окно регистрации] (https://github.com/user-attachments/assets/ef0a1969-90b0-4346-884e-6a55a821d675)
 
